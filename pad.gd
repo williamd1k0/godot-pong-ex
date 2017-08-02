@@ -5,6 +5,7 @@ const PAD_SPEED = 200
 var screen_size = OS.get_window_size()
 
 func _ready():
+	reset()
 	set_process(true)
 
 func _process(delta):
@@ -19,3 +20,6 @@ func _process(delta):
 	# Limit position
 	pad_pos.y = clamp(pad_pos.y, 0, screen_size.y)
 	set_pos(pad_pos)
+
+func reset():
+	set_pos(Vector2(get_pos().x, screen_size.y/2))

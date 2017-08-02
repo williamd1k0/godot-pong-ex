@@ -64,3 +64,4 @@ func _on_game_over(winner):
 	direction = Vector2(-1, 0)
 	ball.set_pos(screen_size*0.5)
 	Score.add_score(winner)
+	get_tree().call_group(SceneTree.GROUP_CALL_DEFAULT, 'pad', 'reset')
