@@ -1,4 +1,3 @@
-
 extends Node2D
 
 enum {
@@ -8,23 +7,28 @@ enum {
 	DIR_RIGHT=1
 }
 
+signal game_over(winner)
+
 # Member variables
 export(int) var INITIAL_BALL_SPEED = 80
 onready var ball_speed = INITIAL_BALL_SPEED
 onready var pad_size = get_node("left").get_texture().get_size()
 
+onready var ball = get_node("ball")
 var screen_size = OS.get_window_size()
 
 # Default ball direction
 var direction = Vector2(-1, 0)
 
 func _ready():
+	connect("game_over", self, '_on_game_over')
+	# TODO: use groups
 	pad_size = get_node("left").get_item_rect().size
 	set_process(true)
 
 func _process(delta):
 	# Get ball position and pad rectangles
-	var ball_pos = get_node("ball").get_pos()
+	var ball_pos = ball.get_pos()
 	var left_rect = Rect2(get_node("left").get_pos() - pad_size*0.5, pad_size)
 	var right_rect = Rect2(get_node("right").get_pos() - pad_size*0.5, pad_size)
 	
@@ -47,10 +51,14 @@ func _process(delta):
 		direction = direction.normalized()
 	
 	# Check gameover
-	if (ball_pos.x < 0 or ball_pos.x > screen_size.x):
-		ball_pos = screen_size*0.5
-		ball_speed = INITIAL_BALL_SPEED
-		direction = Vector2(-1, 0)
-	
-	get_node("ball").set_pos(ball_pos)
+	if ball_pos.x < 0:
+		emit_signal('game_over', 1)
+	elif ball_pos.x > screen_size.x:
+		emit_signal('game_over', 2)
+	else:
+		ball.set_pos(ball_pos)
 
+func _on_game_over(winner):
+	ball_speed = INITIAL_BALL_SPEED
+	direction = Vector2(-1, 0)
+	ball.set_pos(screen_size*0.5)
