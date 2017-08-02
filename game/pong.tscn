@@ -1,13 +1,14 @@
 [gd_scene load_steps=10 format=1]
 
-[ext_resource path="res://pong.gd" type="Script" id=1]
-[ext_resource path="res://separator.png" type="Texture" id=2]
-[ext_resource path="res://pad.tscn" type="PackedScene" id=3]
-[ext_resource path="res://ball.png" type="Texture" id=4]
+[ext_resource path="res://game/pong.gd" type="Script" id=1]
+[ext_resource path="res://assets/textures/separator.png" type="Texture" id=2]
+[ext_resource path="res://game/pad.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/textures/ball.png" type="Texture" id=4]
 [ext_resource path="res://assets/sound/tap.wav" type="Sample" id=5]
 [ext_resource path="res://assets/sound/score.wav" type="Sample" id=6]
 
-[sub_resource type="Animation" id=2]
+
+[sub_resource type="Animation" id=5]
 
 resource/name = "roll"
 length = 1.0
@@ -24,7 +25,7 @@ tracks/0/keys = {
 "values": [ 0.0, 360.0 ]
 }
 
-[sub_resource type="SampleLibrary" id=3]
+[sub_resource type="SampleLibrary" id=6]
 
 samples/tap = {
 "db": 0.0,
@@ -74,7 +75,7 @@ texture = ExtResource( 4 )
 playback/process_mode = 1
 playback/default_blend_time = 0.0
 root/root = NodePath("..")
-anims/roll = SubResource( 2 )
+anims/roll = SubResource( 5 )
 playback/active = true
 playback/speed = 1.0
 blend_times = [  ]
@@ -88,7 +89,7 @@ params/attenuation/min_distance = 1.0
 params/attenuation/max_distance = 2048.0
 params/attenuation/distance_exp = 1.0
 config/polyphony = 1
-config/samples = SubResource( 3 )
+config/samples = SubResource( 6 )
 config/pitch_random = 0.0
 
 [node name="SamplePlayer" type="SamplePlayer" parent="."]
