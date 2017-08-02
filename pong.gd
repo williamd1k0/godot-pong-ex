@@ -11,11 +11,12 @@ signal game_over(winner)
 
 # Member variables
 export(int) var INITIAL_BALL_SPEED = 80
-onready var ball_speed = INITIAL_BALL_SPEED
-onready var pad_size = get_node("left").get_texture().get_size()
 
+onready var ball_speed = INITIAL_BALL_SPEED
 onready var ball = get_node("ball")
+
 var screen_size = OS.get_window_size()
+var pad_size
 
 # Default ball direction
 var direction = Vector2(-1, 0)
@@ -23,7 +24,7 @@ var direction = Vector2(-1, 0)
 func _ready():
 	connect("game_over", self, '_on_game_over')
 	# TODO: use groups
-	pad_size = get_node("left").get_item_rect().size
+	pad_size = get_tree().get_nodes_in_group('pad')[0].get_item_rect().size
 	set_process(true)
 
 func _process(delta):

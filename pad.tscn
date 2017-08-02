@@ -3,7 +3,9 @@
 [ext_resource path="res://pad.png" type="Texture" id=1]
 [ext_resource path="res://pad.gd" type="Script" id=2]
 
-[node name="pad" type="Sprite"]
+[node name="pad" type="Sprite" groups=[
+"pad",
+]]
 
 texture = ExtResource( 1 )
 script/script = ExtResource( 2 )
