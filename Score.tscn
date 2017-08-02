@@ -1,0 +1,30 @@
+[gd_scene load_steps=2 format=1]
+
+[sub_resource type="GDScript" id=1]
+
+script/source = "extends Node
+
+signal score_update(player, score)
+
+var score_1 = 0
+var score_2 = 0
+
+func _ready():
+	# Called every time the node is added to the scene.
+	# Initialization here
+	pass
+
+func add_score(player):
+	if player == 1:
+		score_1 += 1
+		emit_signal('score_update', player, score_1)
+	elif player == 2:
+		score_2 += 1
+		emit_signal('score_update', player, score_2)
+"
+
+[node name="Score" type="Node"]
+
+script/script = SubResource( 1 )
+
+

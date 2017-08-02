@@ -1,9 +1,26 @@
-[gd_scene load_steps=4 format=1]
+[gd_scene load_steps=5 format=1]
 
 [ext_resource path="res://pong.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Pixelig Cursief.ttf" type="DynamicFontData" id=2]
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="GDScript" id=1]
+
+script/source = "extends Node
+
+signal p1_update(score)
+signal p2_update(score)
+
+func _ready():
+	Score.connect('score_update', self, '_on_score_update')
+
+func _on_score_update(player, score):
+	if player == 1:
+		emit_signal('p1_update', str(score))
+	else:
+		emit_signal('p2_update', str(score))
+"
+
+[sub_resource type="DynamicFont" id=2]
 
 font/size = 42
 font/use_mipmaps = false
@@ -11,6 +28,8 @@ font/use_filter = false
 font/font = ExtResource( 2 )
 
 [node name="game" type="Node"]
+
+script/script = SubResource( 1 )
 
 [node name="game" parent="." instance=ExtResource( 1 )]
 
@@ -31,8 +50,8 @@ margin/left = 240.0
 margin/top = 1.0
 margin/right = 320.0
 margin/bottom = 44.0
-custom_fonts/font = SubResource( 1 )
-text = "99"
+custom_fonts/font = SubResource( 2 )
+text = "0"
 valign = 1
 percent_visible = 1.0
 lines_skipped = 0
@@ -48,12 +67,16 @@ margin/left = 320.0
 margin/top = 1.0
 margin/right = 400.0
 margin/bottom = 44.0
-custom_fonts/font = SubResource( 1 )
-text = "99"
+custom_fonts/font = SubResource( 2 )
+text = "0"
 align = 2
 valign = 1
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
+
+[connection signal="p1_update" from="." to="UI/score1" method="set_text"]
+
+[connection signal="p2_update" from="." to="UI/score2" method="set_text"]
 
 

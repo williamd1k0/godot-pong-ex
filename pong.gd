@@ -53,9 +53,9 @@ func _process(delta):
 	
 	# Check gameover
 	if ball_pos.x < 0:
-		emit_signal('game_over', 1)
-	elif ball_pos.x > screen_size.x:
 		emit_signal('game_over', 2)
+	elif ball_pos.x > screen_size.x:
+		emit_signal('game_over', 1)
 	else:
 		ball.set_pos(ball_pos)
 
@@ -63,3 +63,4 @@ func _on_game_over(winner):
 	ball_speed = INITIAL_BALL_SPEED
 	direction = Vector2(-1, 0)
 	ball.set_pos(screen_size*0.5)
+	Score.add_score(winner)
