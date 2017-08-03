@@ -1,11 +1,12 @@
-# godot-pong
+# Godot Pong EX
 
-Pong demo focused in the main features of the Godot Engine
+A pong demo focused in the main features of the Godot Engine 2.1.x.
 
+Base demo was forked from [GodotEngine/Demos](https://github.com/godotengine/godot-demo-projects).
 
 SFX was made by [Gors](https://gors.bandcamp.com/).
 
-Music was made by [Pigdev Studio](https://github.com/pigdevstudio)
+Music was made by [Pigdev Studio](https://github.com/pigdevstudio).
 
 ## Features
 
