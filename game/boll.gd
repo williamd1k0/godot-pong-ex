@@ -19,7 +19,7 @@ var screen_size = OS.get_window_size()
 var pad_size
 
 # Default ball direction
-var direction = Vector2(-1, 0)
+var direction = Vector2(sign(randf()*2.0 - 1), 0)
 
 func _ready():
 	connect("out_of_screen", self, '_on_out_of_screen')
@@ -61,5 +61,5 @@ func _process(delta):
 
 func _on_out_of_screen(side):
 	ball_speed = INITIAL_BALL_SPEED
-	direction = Vector2(-1, 0)
+	direction = Vector2(sign(randf()*2.0 - 1), 0)
 	set_pos(screen_size*0.5)
