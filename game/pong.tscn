@@ -1,52 +1,24 @@
-[gd_scene load_steps=10 format=1]
+[gd_scene load_steps=7 format=1]
 
 [ext_resource path="res://game/pong.gd" type="Script" id=1]
 [ext_resource path="res://assets/textures/separator.png" type="Texture" id=2]
 [ext_resource path="res://game/pad.tscn" type="PackedScene" id=3]
-[ext_resource path="res://assets/textures/ball.png" type="Texture" id=4]
-[ext_resource path="res://assets/sound/tap.wav" type="Sample" id=5]
-[ext_resource path="res://assets/sound/score.wav" type="Sample" id=6]
+[ext_resource path="res://game/ball.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/sound/score.wav" type="Sample" id=5]
 
+[sub_resource type="SampleLibrary" id=3]
 
-[sub_resource type="Animation" id=5]
-
-resource/name = "roll"
-length = 1.0
-loop = true
-step = 0.1
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:transform/rot")
-tracks/0/interp = 1
-tracks/0/imported = false
-tracks/0/keys = {
-"times": FloatArray( 0, 1 ),
-"transitions": FloatArray( 1, 1 ),
-"update": 0,
-"values": [ 0.0, 360.0 ]
-}
-
-[sub_resource type="SampleLibrary" id=6]
-
-samples/tap = {
+samples/score = {
 "db": 0.0,
 "pitch": 1.0,
 "priority": 0,
 "sample": ExtResource( 5 )
 }
 
-[sub_resource type="SampleLibrary" id=4]
-
-samples/score = {
-"db": 0.0,
-"pitch": 1.0,
-"priority": 0,
-"sample": ExtResource( 6 )
-}
-
 [node name="pong" type="Node2D"]
 
+process/pause_mode = 2
 script/script = ExtResource( 1 )
-INITIAL_BALL_SPEED = 150
 
 [node name="separator" type="Sprite" parent="."]
 
@@ -56,46 +28,25 @@ flip_v = true
 
 [node name="left" parent="." instance=ExtResource( 3 )]
 
+process/pause_mode = 1
 transform/pos = Vector2( 50, 200 )
 modulate = Color( 0, 0.835938, 1, 1 )
 
 [node name="right" parent="." instance=ExtResource( 3 )]
 
+process/pause_mode = 1
 transform/pos = Vector2( 590, 200 )
 modulate = Color( 1, 0, 0.9375, 1 )
 player = 2
 
-[node name="ball" type="Sprite" parent="."]
+[node name="ball" parent="." instance=ExtResource( 4 )]
 
-transform/pos = Vector2( 320.283, 188 )
-texture = ExtResource( 4 )
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="ball"]
-
-playback/process_mode = 1
-playback/default_blend_time = 0.0
-root/root = NodePath("..")
-anims/roll = SubResource( 5 )
-playback/active = true
-playback/speed = 1.0
-blend_times = [  ]
-autoplay = "roll"
-
-[node name="SamplePlayer2D" type="SamplePlayer2D" parent="ball"]
-
-params/volume_db = 0.0
-params/pitch_scale = 1.0
-params/attenuation/min_distance = 1.0
-params/attenuation/max_distance = 2048.0
-params/attenuation/distance_exp = 1.0
-config/polyphony = 1
-config/samples = SubResource( 6 )
-config/pitch_random = 0.0
+process/pause_mode = 1
 
 [node name="SamplePlayer" type="SamplePlayer" parent="."]
 
 config/polyphony = 1
-config/samples = SubResource( 4 )
+config/samples = SubResource( 3 )
 default/volume_db = 0.0
 default/pitch_scale = 1.0
 default/pan = 0.0
@@ -108,5 +59,7 @@ default/filter/gain = 1.0
 default/reverb_room = 2
 default/reverb_send = 0.0
 default/chorus_send = 0.0
+
+[connection signal="out_of_screen" from="ball" to="." method="_on_ball_out_of_screen"]
 
 
