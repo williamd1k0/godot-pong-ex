@@ -12,16 +12,17 @@ enum {
 # Member variables
 export(int) var INITIAL_BALL_SPEED = 80
 
-onready var ball_speed = INITIAL_BALL_SPEED
 onready var pads = get_tree().get_nodes_in_group('pad')
 
-var screen_size = OS.get_window_size()
-var pad_size
+const SPEED_MULTIPLIER = 1.2
 
-# Default ball direction
-var direction = Vector2(sign(randf()*2.0 - 1), 0)
+var screen_size = OS.get_window_size()
+var ball_speed
+var pad_size
+var direction
 
 func _ready():
+	reset()
 	connect("out_of_screen", self, '_on_out_of_screen')
 	pad_size = pads[0].get_item_rect().size
 	set_process(true)
@@ -46,7 +47,7 @@ func _process(delta):
 		var pad_rect = Rect2(pad.get_pos() - pad_size*0.5, pad_size)
 		if pad_rect.has_point(ball_pos) and dir_x == sign(pad.get_pos().x - get_pos().x):
 			direction.x = -direction.x
-			ball_speed *= 1.1
+			ball_speed *= SPEED_MULTIPLIER
 			direction.y = randf()*2.0 - 1
 			direction = direction.normalized()
 			get_node("SamplePlayer2D").play('tap')
@@ -59,7 +60,10 @@ func _process(delta):
 	else:
 		set_pos(ball_pos)
 
-func _on_out_of_screen(side):
+func reset():
 	ball_speed = INITIAL_BALL_SPEED
 	direction = Vector2(sign(randf()*2.0 - 1), 0)
 	set_pos(screen_size*0.5)
+
+func _on_out_of_screen(side):
+	reset()

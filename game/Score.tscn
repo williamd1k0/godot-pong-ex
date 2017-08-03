@@ -9,11 +9,6 @@ signal score_update(player, score)
 var score_1 = 0
 var score_2 = 0
 
-func _ready():
-	# Called every time the node is added to the scene.
-	# Initialization here
-	pass
-
 func add_score(player):
 	if player == 1:
 		score_1 += 1

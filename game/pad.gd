@@ -14,7 +14,7 @@ func _process(delta):
 	
 	if Input.is_action_pressed("move_up_%s" % player):
 		pad_pos.y += -PAD_SPEED*delta
-	if Input.is_action_pressed("move_down_%s" % player):
+	elif Input.is_action_pressed("move_down_%s" % player):
 		pad_pos.y += PAD_SPEED*delta
 	
 	# Limit position
