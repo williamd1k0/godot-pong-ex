@@ -39,7 +39,7 @@ func _process(delta):
 	if ((ball_pos.y < 0 and dir_y == DIR_UP)
 		or (ball_pos.y > screen_size.y and dir_y == DIR_DOWN)):
 		direction.y = -direction.y
-		get_node("SamplePlayer2D").play('tap')
+		get_node("sfx").play('tap')
 	
 	# Flip, change direction and increase speed when touching pads
 	var dir_x = sign(direction.x)
@@ -50,7 +50,7 @@ func _process(delta):
 			ball_speed *= SPEED_MULTIPLIER
 			direction.y = randf()*2.0 - 1
 			direction = direction.normalized()
-			get_node("SamplePlayer2D").play('tap')
+			get_node("sfx").play('tap')
 	
 	# Check gameover
 	if ball_pos.x < 0:

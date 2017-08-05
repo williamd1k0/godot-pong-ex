@@ -6,7 +6,7 @@
 [ext_resource path="res://game/ball.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/sound/score.wav" type="Sample" id=5]
 
-[sub_resource type="SampleLibrary" id=3]
+[sub_resource type="SampleLibrary" id=1]
 
 samples/score = {
 "db": 0.0,
@@ -17,7 +17,6 @@ samples/score = {
 
 [node name="pong" type="Node2D"]
 
-process/pause_mode = 2
 script/script = ExtResource( 1 )
 
 [node name="separator" type="Sprite" parent="."]
@@ -43,10 +42,10 @@ player = 2
 
 process/pause_mode = 1
 
-[node name="SamplePlayer" type="SamplePlayer" parent="."]
+[node name="sfx" type="SamplePlayer" parent="."]
 
 config/polyphony = 1
-config/samples = SubResource( 3 )
+config/samples = SubResource( 1 )
 default/volume_db = 0.0
 default/pitch_scale = 1.0
 default/pan = 0.0

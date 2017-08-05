@@ -42,3 +42,5 @@ Nodes:
 - Basic UI nodes (CanvasLayer and Control)
 - Audio nodes (Sample, Sample2D and Stream Players)
 - AnimationPlayer
+- Particles2D
+

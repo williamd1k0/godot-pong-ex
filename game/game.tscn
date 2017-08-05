@@ -1,8 +1,29 @@
-[gd_scene load_steps=5 format=1]
+[gd_scene load_steps=6 format=1]
 
 [ext_resource path="res://game/pong.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/sound/music.ogg" type="AudioStream" id=2]
 [ext_resource path="res://assets/fonts/Pixelig Cursief.ttf" type="DynamicFontData" id=3]
+
+[sub_resource type="GDScript" id=1]
+
+script/source = "extends Node
+
+signal p1_update(score)
+signal p2_update(score)
+
+func _ready():
+	Score.connect('score_update', self, '_on_score_update')
+	set_process_input(true)
+
+func _input(event):
+	if event.is_action_pressed(\"ui_select\"):
+		get_tree().set_pause(not get_tree().is_paused())
+
+func _on_score_update(player, score):
+	if player == 1:
+		emit_signal('p1_update', str(score))
+	else:
+		emit_signal('p2_update', str(score))"
 
 [sub_resource type="DynamicFont" id=2]
 
@@ -13,7 +34,12 @@ font/font = ExtResource( 3 )
 
 [node name="game" type="Node"]
 
+process/pause_mode = 2
+script/script = SubResource( 1 )
+
 [node name="pong" parent="." instance=ExtResource( 1 )]
+
+process/pause_mode = 1
 
 [node name="music" type="StreamPlayer" parent="."]
 
@@ -26,14 +52,14 @@ stream/paused = false
 stream/loop_restart_time = 0.0
 stream/buffering_ms = 500
 
-[node name="UI" type="CanvasLayer" parent="."]
+[node name="ui" type="CanvasLayer" parent="."]
 
 layer = 1
 offset = Vector2( 0, 0 )
 rotation = 0.0
 scale = Vector2( 1, 1 )
 
-[node name="score1" type="Label" parent="UI"]
+[node name="score1" type="Label" parent="ui"]
 
 focus/ignore_mouse = true
 focus/stop_mouse = true
@@ -50,7 +76,7 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="score2" type="Label" parent="UI"]
+[node name="score2" type="Label" parent="ui"]
 
 focus/ignore_mouse = true
 focus/stop_mouse = true
@@ -68,8 +94,8 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[connection signal="p1_update" from="pong" to="UI/score1" method="set_text"]
+[connection signal="p1_update" from="." to="ui/score1" method="set_text"]
 
-[connection signal="p2_update" from="pong" to="UI/score2" method="set_text"]
+[connection signal="p2_update" from="." to="ui/score2" method="set_text"]
 
 
