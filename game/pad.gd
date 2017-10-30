@@ -13,7 +13,7 @@ func _process(delta):
 	var pad_pos = get_pos()
 	
 	if Input.is_action_pressed("move_up_%s" % player):
-		pad_pos.y += -PAD_SPEED*delta
+		pad_pos.y -= PAD_SPEED*delta
 	elif Input.is_action_pressed("move_down_%s" % player):
 		pad_pos.y += PAD_SPEED*delta
 	
